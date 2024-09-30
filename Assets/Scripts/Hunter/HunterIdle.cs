@@ -11,7 +11,7 @@ public class HunterIdle : IState
     
     public void OnAwake()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 
     public void OnExecute()
@@ -33,7 +33,7 @@ public class HunterIdle : IState
 
     public void OnSleep()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 
     public void SetAgent(Agent agent)
