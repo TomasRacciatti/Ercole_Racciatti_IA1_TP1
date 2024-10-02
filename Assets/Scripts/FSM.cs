@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -72,7 +71,7 @@ public class FSM
 
 
     #region Funciones Helpers
-    // Helpers por si acaso
+    // Helpers
 
     public bool IsCurrentState<T>()
     {

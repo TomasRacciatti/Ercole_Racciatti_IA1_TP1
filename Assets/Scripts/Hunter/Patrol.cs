@@ -30,13 +30,15 @@ public class Patrol : Hunter
         }
 
         _direction.Normalize();
-        transform.position += _direction * _speed * Time.deltaTime;
+        transform.position += _direction * speed * Time.deltaTime;
 
         if (_direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(_direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
+
+        _directionalVelocity = _direction;  // testeo para el pursuit
     }
 
 

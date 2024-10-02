@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HunterPatrol : IState
@@ -7,7 +5,6 @@ public class HunterPatrol : IState
     private Hunter _hunter;
     private FSM _manager;
 
-    private Vector3 _direction;
     [SerializeField] private int _targetPoint = 0;
     private bool _isMovingForward = true;
     [SerializeField] private float _energyLoss = 1.5f;
@@ -36,21 +33,17 @@ public class HunterPatrol : IState
 
         _hunter.energy -= _energyLoss * Time.deltaTime; // Loses energy while patrolling
 
-        _direction = _hunter.patrolPoints[_targetPoint].position - _hunter.transform.position;
+        Vector3 desiredVelocity = SteeringBehaviours.Seek(_hunter.transform.position, _hunter.speed, _hunter._directionalVelocity, _hunter.patrolPoints[_targetPoint].position, _hunter._steeringForce);
+        _hunter.SetVelocity(desiredVelocity);
 
-        if (_direction.magnitude < 0.1f)
+        _hunter.transform.position += _hunter._directionalVelocity * Time.deltaTime;
+
+        if (Vector3.Distance(_hunter.transform.position, _hunter.patrolPoints[_targetPoint].position) < 0.1f)
         {
             ChangeWaypoint();
         }
 
-        _direction.Normalize();
-        _hunter.transform.position += _direction * _hunter._speed * Time.deltaTime;
-
-        if (_direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(_direction);
-            _hunter.transform.rotation = Quaternion.Slerp(_hunter.transform.rotation, targetRotation, _hunter._rotationSpeed * Time.deltaTime);
-        }
+        
     }
 
     public void OnSleep()

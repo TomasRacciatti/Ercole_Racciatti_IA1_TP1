@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HunterIdle : IState
@@ -18,13 +16,13 @@ public class HunterIdle : IState
     {
         _hunter.energy += _energyRegain * Time.deltaTime;
 
-        if (_hunter.energy >= 100)
+        if (_hunter.energy >= _hunter.maxEnergy)
         {
             _manager.SetState<HunterPatrol>();
             return;
         }
 
-        if (_hunter.target != null && _hunter.energy >= 20 && Vector3.Distance(_hunter.target.transform.position, _hunter.transform.position) <= _hunter._visionRadius)
+        if (_hunter.target != null && _hunter.energy >= _hunter.maxEnergy && Vector3.Distance(_hunter.target.transform.position, _hunter.transform.position) <= _hunter._visionRadius)
         {
             _manager.SetState<HunterChase>();
             return;

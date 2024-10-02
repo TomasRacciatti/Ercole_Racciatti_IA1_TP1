@@ -1,23 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HunterChase : IState
 {
     private Hunter _hunter;
     private FSM _manager;
-
-    [SerializeField] private float _energyLoss = 4f;
+    private float _chaseSpeedMultiplier = 1.3f;
+    private float maxFutureTime = 10f;
+    private float _energyLoss = 10f;
 
 
     public void OnAwake()
     {
-        throw new System.NotImplementedException();
+        _hunter.speed *= _chaseSpeedMultiplier;
     }
 
     public void OnExecute()
     {
-        if (_hunter.energy <= 20)
+        if (_hunter.energy <= 0)
         {
             _manager.SetState<HunterIdle>();
             return;
@@ -28,15 +27,18 @@ public class HunterChase : IState
             _manager.SetState<HunterPatrol>();
             return;
         }
+        
+        // Pursuit
+        _hunter.SetVelocity(SteeringBehaviours.Pursuit(_hunter.transform.position, _hunter.speed, _hunter._directionalVelocity,_hunter.target.Position, _hunter.target.Velocity, _hunter._steeringForce, maxFutureTime));
 
-
+        _hunter.transform.position += _hunter._directionalVelocity * Time.deltaTime;
 
         _hunter.energy -= _energyLoss * Time.deltaTime; // Loses energy while chasing
     }
 
     public void OnSleep()
     {
-        throw new System.NotImplementedException();
+        _hunter.speed /= _chaseSpeedMultiplier;
     }
 
     public void SetAgent(Agent agent)

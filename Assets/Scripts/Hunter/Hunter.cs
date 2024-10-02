@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Hunter : Agent
 {
     [Header("Hunter")]
     public float energy;
-    public float _visionRadius;
+    public float maxEnergy = 100f;
     public Transform[] patrolPoints;
 
-    public Agent target; // CORREGIR CUANDO ESTEN LOS BOIDS
+    public Boid target;
 
     public FSM stateMachine;
 
@@ -27,9 +25,28 @@ public class Hunter : Agent
         
     }
 
+    private void Start()
+    {
+        target = GameObject.FindAnyObjectByType<Boid>();
+
+        energy = maxEnergy;
+    }
 
     private void Update()
     {
         stateMachine.OnUpdate();
+
+        if (_directionalVelocity != Vector3.zero)  // Hunter rotation to objective
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(_directionalVelocity);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, _visionRadius);
     }
 }
