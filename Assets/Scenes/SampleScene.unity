@@ -157,10 +157,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _directionalVelocity: {x: 0, y: 0, z: 0}
-  speed: 20
+  speed: 10
   rotationSpeed: 0
   _visionRadius: 25
   _steeringForce: 0.1
+  maxFutureTime: 0.5
   target: {fileID: 0}
 --- !u!135 &73380970
 SphereCollider:
@@ -265,6 +266,7 @@ MonoBehaviour:
   rotationSpeed: 0
   _visionRadius: 0
   _steeringForce: 0
+  maxFutureTime: 2
 --- !u!1 &369577308
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,6 +304,7 @@ MonoBehaviour:
   rotationSpeed: 0
   _visionRadius: 0
   _steeringForce: 0
+  maxFutureTime: 2
   energy: 100
   maxEnergy: 100
   patrolPoints:
@@ -788,6 +791,7 @@ MonoBehaviour:
   rotationSpeed: 10
   _visionRadius: 20
   _steeringForce: 0.1
+  maxFutureTime: 2
   energy: 100
   maxEnergy: 100
   patrolPoints:

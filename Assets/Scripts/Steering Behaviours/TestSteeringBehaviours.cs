@@ -4,8 +4,6 @@ public class TestSteeringBehaviours : Agent
 {
     public Agent target;
 
-    private float maxFutureTime = 5f;
-
 
     private void Start()
     {

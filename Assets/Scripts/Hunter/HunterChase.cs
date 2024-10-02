@@ -5,7 +5,6 @@ public class HunterChase : IState
     private Hunter _hunter;
     private FSM _manager;
     private float _chaseSpeedMultiplier = 1.3f;
-    private float maxFutureTime = 10f;
     private float _energyLoss = 10f;
 
 
@@ -29,7 +28,7 @@ public class HunterChase : IState
         }
         
         // Pursuit
-        _hunter.SetVelocity(SteeringBehaviours.Pursuit(_hunter.transform.position, _hunter.speed, _hunter._directionalVelocity,_hunter.target.Position, _hunter.target.Velocity, _hunter._steeringForce, maxFutureTime));
+        _hunter.SetVelocity(SteeringBehaviours.Pursuit(_hunter.transform.position, _hunter.speed, _hunter._directionalVelocity,_hunter.target.Position, _hunter.target.Velocity, _hunter._steeringForce, _hunter.maxFutureTime));
 
         _hunter.transform.position += _hunter._directionalVelocity * Time.deltaTime;
 
