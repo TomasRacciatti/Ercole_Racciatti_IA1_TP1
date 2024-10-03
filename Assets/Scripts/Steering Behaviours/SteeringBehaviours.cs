@@ -30,18 +30,29 @@ public static class SteeringBehaviours
 
     public static Vector3 Evade(Vector3 myPosition, float mySpeed, Vector3 myVelocity, Vector3 targetPosition, Vector3 targetVelocity, float force, float maxTime)
     {
-        float distanceToTarget = Vector3.Distance(myPosition, targetPosition);
-        float timeFactor = Mathf.Clamp01(distanceToTarget / maxTime);
-        float futureTime = maxTime * timeFactor;
-
-        Vector3 _futurePosition = targetPosition + targetVelocity * futureTime;
-
-        return -Seek(myPosition, mySpeed, myVelocity, _futurePosition, force);
+        return -Pursuit(myPosition, mySpeed, myVelocity, targetPosition, targetVelocity, force, maxTime);
     }
 
-
-    public static Vector3 Evade2(Vector3 myPosition, float mySpeed, Vector3 myVelocity, Vector3 targetPosition, Vector3 targetVelocity, float force, float maxTime)
+    public static Vector3 ObstacleAvoidance(Agent agent, float force, float castRadius, float aheadDistance, LayerMask obstacleMask, float rotAngle)
     {
-        return -Pursuit(myPosition, mySpeed, myVelocity, targetPosition, targetVelocity, force, maxTime);
+
+        if (Physics.SphereCast(agent.Position, castRadius, agent.Velocity, out RaycastHit hitInfo, aheadDistance, obstacleMask))
+        {
+            Transform obstacle = hitInfo.transform;
+            Vector3 dirToObject = obstacle.position - agent.Position;
+            float angleInBetween = Vector3.SignedAngle(agent.Velocity, dirToObject, Vector3.up);
+
+            float rotationValue = angleInBetween >= 0 ? -rotAngle : rotAngle;  // if angle >= 0 --> -rotAngle. Else --> rotAngle
+            Vector3 desiredDir = Quaternion.Euler(0, rotationValue, 0) * agent.Velocity;
+            desiredDir.Normalize();
+            desiredDir *= agent.speed;
+
+            Vector3 steering = desiredDir - agent.Velocity;
+            steering *= force;
+
+            return steering;
+        }
+
+        return Vector3.zero;
     }
 }

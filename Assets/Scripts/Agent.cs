@@ -12,6 +12,7 @@ public abstract class Agent : MonoBehaviour
     public float _visionRadius;
     [Range(0f, 1f)] public float _steeringForce;
     public float maxFutureTime = 2f;
+    public LayerMask obstacleMask;
 
 
 
