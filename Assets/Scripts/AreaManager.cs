@@ -2,12 +2,9 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-/// <summary>
-/// Manager del area de simulacion.
-/// </summary>
+
 public class AreaManager : MonoBehaviour
 {
-    // Esta es una setup de Singleton con protecciones. Solo un elemento de esta clase puede setearse.
     public static AreaManager Instance { get; private set; }
     public static Action foodOn;
     public static Action foodOff;
@@ -23,29 +20,21 @@ public class AreaManager : MonoBehaviour
     
     private void Awake()
     {
-        // Si no hay una Instance, yo soy el instance.
         if (Instance == null)
         {
             Instance = this;
         }
-        // Si hay una Instance y no soy yo, me destruyo.
         else if (Instance != this)
         {
-            Destroy(this); //Destruye el script, no el objeto.
+            Destroy(this);
         }
     }
 
     private void Start()
     {
-        //Spawneamos los boids y unos obstaculos de manera aleatoria.
         Spawn(_boidSpawnAmount, _boidPrefab);
     }
-
-    /// <summary>
-    /// Spawneamos de manera aleatoria una cierta cantidad de objetos en escena.
-    /// </summary>
-    /// <param name="spawnAmount">Cantidad de objetos a spawnear</param>
-    /// <param name="prefab">Prefab que vamos a usar para spawnear</param>
+    
     private void Spawn<T>(int spawnAmount, T prefab) where T : MonoBehaviour
     {
         for (int i = 0; i < spawnAmount; i++)
@@ -78,7 +67,6 @@ public class AreaManager : MonoBehaviour
     
     private void OnDrawGizmos()
     {
-        // Dibujamos los bordes el area.
         Gizmos.color = Color.yellow;
         
         var halfDim = HalfDimensions;

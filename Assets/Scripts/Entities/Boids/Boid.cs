@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Boid : AgentBoid
 {
-    public FSM statemachine;
+    public FSM stateMachine;
     private readonly HashSet<Type> _steeringSettings = new HashSet<Type>();
     private Hunter _hunter;
     
@@ -14,13 +14,22 @@ public class Boid : AgentBoid
     protected override void Awake()
     {
         base.Awake();
-        //_hunter = GameObject.FindGameObjectWithTag("Hunter").GetComponent<Hunter>();
+
         _steeringSettings.Add(typeof(Flocking));
         _steeringSettings.Add(typeof(ObstacleAvoidanceBoid));
         _steeringSettings.Add(typeof(EvadeFinal));
         _steeringSettings.Add(typeof(ArriveFinal));
 
         UpdateBehaviorsActiveState(_steeringSettings);
+        
+        stateMachine = new();
+
+
+        stateMachine.AddNewState<IdleState>().SetAgent(this);
+        stateMachine.AddNewState<FoodGetState>().SetAgent(this);
+        stateMachine.AddNewState<EvadeState>().SetAgent(this);
+
+        stateMachine.SetInitialState<IdleState>();
     }
 
     protected override void Start()
@@ -31,6 +40,7 @@ public class Boid : AgentBoid
 
     private void Update()
     {
+        stateMachine.OnUpdate();
         var boids = Flocking.DetectBoids(this);
         
         SetBehaviorEffectiveness(typeof(Accelerate), boids.Count == 0 ? 1f : 0f, false);

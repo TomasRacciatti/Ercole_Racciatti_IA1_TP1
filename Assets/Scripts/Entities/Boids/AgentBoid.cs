@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class AgentBoid : Entity
+public abstract class AgentBoid : Agent
 {
 
     public override Vector3 Velocity => _velocity;

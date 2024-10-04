@@ -205,6 +205,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5583e9548043a054cafdf90ef35367fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _directionalVelocity: {x: 0, y: 0, z: 0}
+  speed: 0
+  rotationSpeed: 0
+  _visionRadius: 0
+  _steeringForce: 0
+  maxFutureTime: 2
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
   _maxSpeed: 5
   _velocity: {x: 0, y: 0, z: 0}
 --- !u!136 &8900991078705266603
@@ -276,11 +285,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52f83db942ab9a3488f2fdaa935c2d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isActive: 0
+  _isActive: 1
   _maxForce: 0.08
   _effectiveness: 1
   _food: {fileID: 0}
-  maxSteeringForce: 0
+  maxSteeringForce: 0.2
   arrivalRadius: 0.2
 --- !u!114 &1860877810666778023
 MonoBehaviour:
