@@ -245,7 +245,7 @@ MonoBehaviour:
   _aheadDistance: 5
   _obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   _angle: 45
 --- !u!114 &7743931560242436243
 MonoBehaviour:

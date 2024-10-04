@@ -7,6 +7,13 @@ public class Boid : AgentBoid
 {
     private readonly HashSet<Type> _steeringSettings = new HashSet<Type>();
 
+    //Borrar
+    /*
+    public Hunter _hunter;
+    [Range(0f, 1f)] public float _steeringForce;
+    public float maxFutureTime = 0.5f;
+    */
+
     protected override void Awake()
     {
         base.Awake();
@@ -31,5 +38,8 @@ public class Boid : AgentBoid
         var dir = GetSteeringDirection(boids);
         AddForce(dir);
         ApplyVelocity(true);
+
+        //Borrar esto despues
+        //AddForce(SteeringBehaviours.Evade(transform.position, _maxSpeed, Velocity, _hunter.Position, _hunter.Velocity, _steeringForce, maxFutureTime));
     }
 }

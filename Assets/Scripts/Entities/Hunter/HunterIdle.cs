@@ -9,6 +9,7 @@ public class HunterIdle : IState
     
     public void OnAwake()
     {
+        Debug.Log("Resting");
         return;
     }
 
@@ -22,11 +23,16 @@ public class HunterIdle : IState
             return;
         }
 
-        if (_hunter.target != null && _hunter.energy >= _hunter.maxEnergy && Vector3.Distance(_hunter.target.transform.position, _hunter.transform.position) <= _hunter._visionRadius)
+        foreach (Entity target in _hunter.target)
         {
-            _manager.SetState<HunterChase>();
-            return;
-        }
+            Vector3 targetPosition = target.Position;
+
+            if (_hunter.target != null && _hunter.energy >= _hunter.maxEnergy && Vector3.Distance(targetPosition, _hunter.transform.position) <= _hunter._visionRadius)
+            {
+                _manager.SetState<HunterChase>();
+                return;
+            }
+        }   
     }
 
     public void OnSleep()
