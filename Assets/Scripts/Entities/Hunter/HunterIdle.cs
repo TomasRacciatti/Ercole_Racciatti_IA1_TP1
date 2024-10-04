@@ -9,7 +9,7 @@ public class HunterIdle : IState
 
     public void OnAwake()
     {
-        Debug.Log("Resting");
+        //Debug.Log("Resting");
         _hunter.resting.gameObject.SetActive(true);
         return;
     }

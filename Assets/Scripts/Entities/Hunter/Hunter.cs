@@ -9,7 +9,7 @@ public class Hunter : Agent
     [Header("Hunter")]
     public float energy;
     public float maxEnergy = 100f;
-    [SerializeField] private float destroyDistance = 0.5f;
+    public float destroyDistance = 2f;
     public Transform[] patrolPoints;
     public Image energyUI;
     public TextMeshProUGUI patroling;
@@ -70,7 +70,7 @@ public class Hunter : Agent
             return;
         }
 
-        foreach (Entity entity in target)
+        /*foreach (Entity entity in target)
         {
             if (entity != null)
             {
@@ -82,7 +82,7 @@ public class Hunter : Agent
                     Destroy(entity.gameObject);
                 }
             }
-        }
+        }*/
     }
 
 
@@ -90,5 +90,10 @@ public class Hunter : Agent
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, _visionRadius);
+    }
+
+    public void DestroyBoid(Entity entity)
+    {
+        Destroy(entity.gameObject);
     }
 }

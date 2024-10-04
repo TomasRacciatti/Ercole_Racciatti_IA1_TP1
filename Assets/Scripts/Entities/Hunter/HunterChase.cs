@@ -53,10 +53,26 @@ public class HunterChase : IState
             Vector3 targetPosition = closestTarget.Position;
             Vector3 targetVelocity = closestTarget.Velocity;
 
-            // Pursuit
-            _hunter.SetVelocity(SteeringBehaviours.Pursuit(_hunter.transform.position, _hunter.speed, _hunter._directionalVelocity, targetPosition, targetVelocity, _hunter._steeringForce, _hunter.maxFutureTime));
+            
+            if (Vector3.Distance(targetPosition, _hunter.transform.position) < _hunter.destroyDistance)
+            {
+                _hunter.target.Remove(closestTarget);
+                _hunter.DestroyBoid(closestTarget);
+                return;
 
-            _hunter.transform.position += _hunter._directionalVelocity * Time.deltaTime;
+                if (_hunter.target.Count == 0)
+                {
+                    _manager.SetState<HunterPatrol>(); 
+                    return;
+                }
+            }
+
+            else
+            {
+                _hunter.SetVelocity(SteeringBehaviours.Pursuit(_hunter.transform.position, _hunter.speed, _hunter._directionalVelocity, targetPosition, targetVelocity, _hunter._steeringForce, _hunter.maxFutureTime));
+
+                _hunter.transform.position += _hunter._directionalVelocity * Time.deltaTime;
+            }
 
             _hunter.energy -= _energyLoss * Time.deltaTime; // Loses energy while chasing
         }
