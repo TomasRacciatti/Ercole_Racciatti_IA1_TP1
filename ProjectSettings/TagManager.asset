@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - boid
+  - food
+  - hunter
   layers:
   - Default
   - TransparentFX
@@ -34,9 +37,9 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - Boids
   - Hunter
+  - boid
+  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0

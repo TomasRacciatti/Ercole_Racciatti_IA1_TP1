@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 public class EvadeTest : Boid
 {
@@ -14,10 +14,10 @@ public class EvadeTest : Boid
     {
         if (target != null && Vector3.Distance(target.transform.position, transform.position) < _visionRadius)
         {
-            SetVelocity(SteeringBehaviours.Evade(transform.position, speed, _directionalVelocity, target.Position, target.Velocity, _steeringForce, maxFutureTime));
+            SetVelocity(SteeringBehaviours.Evade2(transform.position, speed, _directionalVelocity, target.Position, target.Velocity, maxSteeringForce, maxFutureTime));
 
             transform.position += _directionalVelocity * Time.deltaTime;
         }    
     }
 
-}
+}*/
