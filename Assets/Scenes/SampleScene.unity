@@ -466,6 +466,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AreaManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2831528054477444694, guid: b17a8592bb35efa47a582c41fe46ba6c, type: 3}
+      propertyPath: m_TagString
+      value: areaManager
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -10,6 +10,7 @@ public class AreaManager : MonoBehaviour
     // Esta es una setup de Singleton con protecciones. Solo un elemento de esta clase puede setearse.
     public static AreaManager Instance { get; private set; }
     public static Action foodOn;
+    public FoodColision _foodColision;
     public Vector2 Dimensions => _dimensions;
     public Vector2 HalfDimensions => _dimensions / 2f;
     
@@ -63,8 +64,14 @@ public class AreaManager : MonoBehaviour
 
     public void ButtonFood()
     {
-        Spawn(_foodAmount, _foodPrefab);
-        if(foodOn != null) foodOn();
+        if (_foodColision == null)
+        {
+            Spawn(_foodAmount, _foodPrefab);
+        }
+        else
+        {
+            Debug.Log("You can only spawn one food");
+        }
     }
     
     private void OnDrawGizmos()

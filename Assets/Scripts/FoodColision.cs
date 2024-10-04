@@ -5,10 +5,21 @@ using UnityEngine;
 
 public class FoodColision : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private LayerMask mask;
+    private AreaManager _areaManager;
+
+    private void Start()
     {
-        other.gameObject.CompareTag("boid");
-        Debug.Log("funca");
-        Destroy(this.gameObject);
+        _areaManager = GameObject.Find("AreaManager").GetComponent<AreaManager>();
+        if(_areaManager._foodColision == null) _areaManager._foodColision = this;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer ("food")) 
+        {
+            _areaManager._foodColision = null;
+            Destroy(this.gameObject);
+        }
     }
 }
