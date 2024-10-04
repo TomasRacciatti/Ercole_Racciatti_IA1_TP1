@@ -2,8 +2,8 @@ using UnityEngine;
 
 public abstract class Agent : Entity
 {
-    public Vector3 Velocity { get => _directionalVelocity; }
-    public Vector3 Position { get => transform.position; }
+    public override Vector3 Velocity { get => _directionalVelocity; }
+    public override Vector3 Position { get => transform.position; }
     
     [Header("Agent")]
     public Vector3 _directionalVelocity;
