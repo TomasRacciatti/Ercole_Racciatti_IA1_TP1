@@ -5,9 +5,9 @@ public class HunterPatrol : IState
     private Hunter _hunter;
     private FSM _manager;
 
-    [SerializeField] private int _targetPoint = 0;
+    private int _targetPoint = 0;
     private bool _isMovingForward = true;
-    [SerializeField] private float _energyLoss = 1.5f;
+    private float _energyLoss = 1.5f;
 
 
     public void OnAwake()
@@ -45,7 +45,7 @@ public class HunterPatrol : IState
 
         _hunter.transform.position += _hunter._directionalVelocity * Time.deltaTime;
 
-        if (Vector3.Distance(_hunter.transform.position, _hunter.patrolPoints[_targetPoint].position) < 0.1f)
+        if (Vector3.Distance(_hunter.transform.position, _hunter.patrolPoints[_targetPoint].position) < 0.5f)
         {
             ChangeWaypoint();
         }
@@ -88,5 +88,7 @@ public class HunterPatrol : IState
                 _isMovingForward = true;
             }
         }
+
+        //Debug.Log("current waypoint: " + _targetPoint);
     }
 }
