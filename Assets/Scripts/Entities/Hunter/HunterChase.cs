@@ -10,6 +10,7 @@ public class HunterChase : IState
 
     public void OnAwake()
     {
+        Debug.Log("Chasing");
         _hunter.speed *= _chaseSpeedMultiplier;
     }
 
@@ -21,18 +22,50 @@ public class HunterChase : IState
             return;
         }
 
-        if (_hunter.target == null || Vector3.Distance(_hunter.target.transform.position, _hunter.transform.position) > _hunter._visionRadius * 1.2f)
+        _hunter.target.RemoveAll(item => item == null);
+
+        if (_hunter.target.Count == 0)
         {
             _manager.SetState<HunterPatrol>();
             return;
         }
-        
-        // Pursuit
-        _hunter.SetVelocity(SteeringBehaviours.Pursuit(_hunter.transform.position, _hunter.speed, _hunter._directionalVelocity,_hunter.target.Position, _hunter.target.Velocity, _hunter._steeringForce, _hunter.maxFutureTime));
 
-        _hunter.transform.position += _hunter._directionalVelocity * Time.deltaTime;
+        Entity closestTarget = null;
+        float closestDistance = float.MaxValue;
 
-        _hunter.energy -= _energyLoss * Time.deltaTime; // Loses energy while chasing
+        foreach (Entity target in _hunter.target)
+        {
+            if (target == null) continue;
+
+            float distance = Vector3.Distance(target.Position, _hunter.transform.position);
+
+
+
+            if (distance < _hunter._visionRadius * 1.2f && distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestTarget = target;
+            }
+        }
+
+        if (closestTarget != null)
+        {
+            Vector3 targetPosition = closestTarget.Position;
+            Vector3 targetVelocity = closestTarget.Velocity;
+
+            // Pursuit
+            _hunter.SetVelocity(SteeringBehaviours.Pursuit(_hunter.transform.position, _hunter.speed, _hunter._directionalVelocity, targetPosition, targetVelocity, _hunter._steeringForce, _hunter.maxFutureTime));
+
+            _hunter.transform.position += _hunter._directionalVelocity * Time.deltaTime;
+
+            _hunter.energy -= _energyLoss * Time.deltaTime; // Loses energy while chasing
+        }
+        else
+        {
+            _manager.SetState<HunterPatrol>();
+            return;
+        }
+
     }
 
     public void OnSleep()
@@ -50,3 +83,4 @@ public class HunterChase : IState
         _manager = manager;
     }
 }
+

@@ -6,9 +6,10 @@ public class HunterIdle : IState
     private FSM _manager;
 
     [SerializeField] private float _energyRegain = 10;
-    
+
     public void OnAwake()
     {
+        Debug.Log("Resting");
         return;
     }
 
@@ -22,10 +23,15 @@ public class HunterIdle : IState
             return;
         }
 
-        if (_hunter.target != null && _hunter.energy >= _hunter.maxEnergy && Vector3.Distance(_hunter.target.transform.position, _hunter.transform.position) <= _hunter._visionRadius)
+        foreach (Entity target in _hunter.target)
         {
-            _manager.SetState<HunterChase>();
-            return;
+            Vector3 targetPosition = target.Position;
+
+            if (_hunter.target != null && _hunter.energy >= _hunter.maxEnergy && Vector3.Distance(targetPosition, _hunter.transform.position) <= _hunter._visionRadius)
+            {
+                _manager.SetState<HunterChase>();
+                return;
+            }
         }
     }
 
@@ -41,6 +47,6 @@ public class HunterIdle : IState
 
     public void SetFSM(FSM manager)
     {
-        _manager = manager; 
+        _manager = manager;
     }
 }

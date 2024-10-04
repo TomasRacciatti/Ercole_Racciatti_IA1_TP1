@@ -7,11 +7,10 @@ public class Hunter : Agent
     [Header("Hunter")]
     public float energy;
     public float maxEnergy = 100f;
-    public float destroyDistance = 1f;
     public Transform[] patrolPoints;
+    [SerializeField] private float destroyDistance = 0.5f;
 
-
-    public List<Boid> target = new();
+    public List<Entity> target = new();
 
     public FSM stateMachine;
 
@@ -20,23 +19,24 @@ public class Hunter : Agent
     {
         stateMachine = new();
 
-        
+
         stateMachine.AddNewState<HunterIdle>().SetAgent(this);
         stateMachine.AddNewState<HunterPatrol>().SetAgent(this);
         stateMachine.AddNewState<HunterChase>().SetAgent(this);
 
         stateMachine.SetInitialState<HunterPatrol>();
-        
+
     }
+
 
     private IEnumerator FindBoidsDelayed()
     {
-        yield return new WaitForSeconds(1f);  // Delay to give time for boids to instantiate
+        yield return new WaitForSeconds(0.3f);  // Delay to give time for boids to instantiate
 
-        Boid[] foundBoids = GameObject.FindObjectsOfType<Boid>();
+        /*Boid[] foundBoids = GameObject.FindObjectsOfType<Boid>();
         Debug.Log("Number of Boid objects found: " + foundBoids.Length);
 
-        target.AddRange(foundBoids);
+        target.AddRange(foundBoids);*/
     }
 
     protected override void Start()
@@ -57,18 +57,21 @@ public class Hunter : Agent
             Quaternion targetRotation = Quaternion.LookRotation(_directionalVelocity);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
-
-        foreach (Boid boid in target)
+        else
         {
-            if (boid != null) 
-            {
-                
-                float distance = Vector3.Distance(transform.position, boid.transform.position);
+            return;
+        }
 
-                
+        foreach (Entity entity in target)
+        {
+            if (entity != null)
+            {
+                float distance = Vector3.Distance(transform.position, entity.transform.position);
+
                 if (distance < destroyDistance)
                 {
-                    Destroy(boid.gameObject);
+                    Debug.Log("Comi");
+                    Destroy(entity.gameObject);
                 }
             }
         }

@@ -12,6 +12,7 @@ public class HunterPatrol : IState
 
     public void OnAwake()
     {
+        Debug.Log("Patroling");
         return;
     }
 
@@ -24,10 +25,16 @@ public class HunterPatrol : IState
             return;
         }
 
-        if (_hunter.target != null && _hunter.energy >= 20 && Vector3.Distance(_hunter.target.transform.position, _hunter.transform.position) <= _hunter._visionRadius)
+
+        foreach (Entity target in _hunter.target)
         {
-            _manager.SetState<HunterChase>();
-            return;
+            Vector3 targetPosition = target.Position;
+
+            if (_hunter.target != null && _hunter.energy >= 20 && Vector3.Distance(targetPosition, _hunter.transform.position) <= _hunter._visionRadius)
+            {
+                _manager.SetState<HunterChase>();
+                return;
+            }
         }
 
 
@@ -43,7 +50,7 @@ public class HunterPatrol : IState
             ChangeWaypoint();
         }
 
-        
+
     }
 
     public void OnSleep()
