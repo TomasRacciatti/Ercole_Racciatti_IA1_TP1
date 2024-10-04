@@ -12,7 +12,7 @@ public class HunterPatrol : IState
 
     public void OnAwake()
     {
-        Debug.Log("Patroling");
+        _hunter.patroling.gameObject.SetActive(true);
         return;
     }
 
@@ -55,6 +55,7 @@ public class HunterPatrol : IState
 
     public void OnSleep()
     {
+        _hunter.patroling.gameObject.SetActive(false);
         return;
     }
 

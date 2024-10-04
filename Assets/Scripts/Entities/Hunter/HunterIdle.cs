@@ -10,6 +10,7 @@ public class HunterIdle : IState
     public void OnAwake()
     {
         Debug.Log("Resting");
+        _hunter.resting.gameObject.SetActive(true);
         return;
     }
 
@@ -37,6 +38,7 @@ public class HunterIdle : IState
 
     public void OnSleep()
     {
+        _hunter.resting.gameObject.SetActive(false);
         return;
     }
 

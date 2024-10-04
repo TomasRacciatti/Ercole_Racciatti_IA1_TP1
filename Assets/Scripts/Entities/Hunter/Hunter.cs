@@ -1,14 +1,20 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Hunter : Agent
 {
     [Header("Hunter")]
     public float energy;
     public float maxEnergy = 100f;
-    public Transform[] patrolPoints;
     [SerializeField] private float destroyDistance = 0.5f;
+    public Transform[] patrolPoints;
+    public Image energyUI;
+    public TextMeshProUGUI patroling;
+    public TextMeshProUGUI resting;
+    public TextMeshProUGUI chasing;
 
     public List<Entity> target = new();
 
@@ -33,10 +39,10 @@ public class Hunter : Agent
     {
         yield return new WaitForSeconds(0.3f);  // Delay to give time for boids to instantiate
 
-        /*Boid[] foundBoids = GameObject.FindObjectsOfType<Boid>();
-        Debug.Log("Number of Boid objects found: " + foundBoids.Length);
+        Boid[] foundBoids = GameObject.FindObjectsOfType<Boid>();
+        //Debug.Log("Number of Boid objects found: " + foundBoids.Length);
 
-        target.AddRange(foundBoids);*/
+        target.AddRange(foundBoids);
     }
 
     protected override void Start()
@@ -51,6 +57,8 @@ public class Hunter : Agent
     private void Update()
     {
         stateMachine.OnUpdate();
+
+        energyUI.fillAmount = energy/maxEnergy;
 
         if (_directionalVelocity != Vector3.zero)  // Hunter rotation to objective
         {

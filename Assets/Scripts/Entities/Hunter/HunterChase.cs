@@ -10,7 +10,7 @@ public class HunterChase : IState
 
     public void OnAwake()
     {
-        Debug.Log("Chasing");
+        _hunter.chasing.gameObject.SetActive(true);
         _hunter.speed *= _chaseSpeedMultiplier;
     }
 
@@ -71,6 +71,7 @@ public class HunterChase : IState
     public void OnSleep()
     {
         _hunter.speed /= _chaseSpeedMultiplier;
+        _hunter.chasing.gameObject.SetActive(false);
     }
 
     public void SetAgent(Agent agent)
