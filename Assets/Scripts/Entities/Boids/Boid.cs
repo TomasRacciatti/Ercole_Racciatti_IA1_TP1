@@ -6,14 +6,19 @@ using Random = UnityEngine.Random;
 
 public class Boid : AgentBoid
 {
+    public FSM statemachine;
     private readonly HashSet<Type> _steeringSettings = new HashSet<Type>();
-    private EvadeArrive _evade;
+    private Hunter _hunter;
+    
+
     protected override void Awake()
     {
         base.Awake();
-        _evade = GetComponent<EvadeArrive>();
+        //_hunter = GameObject.FindGameObjectWithTag("Hunter").GetComponent<Hunter>();
         _steeringSettings.Add(typeof(Flocking));
         _steeringSettings.Add(typeof(ObstacleAvoidanceBoid));
+        _steeringSettings.Add(typeof(EvadeFinal));
+        _steeringSettings.Add(typeof(ArriveFinal));
 
         UpdateBehaviorsActiveState(_steeringSettings);
     }

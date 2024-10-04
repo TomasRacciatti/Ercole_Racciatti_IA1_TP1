@@ -148,11 +148,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2785313687495389964}
-  - component: {fileID: -8722191662483494397}
-  - component: {fileID: 4246871344853912450}
   - component: {fileID: 9040920863394208467}
   - component: {fileID: 7743931560242436243}
   - component: {fileID: 8900991078705266603}
+  - component: {fileID: 5730262198342627554}
+  - component: {fileID: 4594038167757234482}
+  - component: {fileID: 3384385436268247631}
+  - component: {fileID: 1860877810666778023}
   m_Layer: 30
   m_Name: Boid 1
   m_TagString: boid
@@ -176,43 +178,6 @@ Transform:
   - {fileID: 3397729582717699412}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8722191662483494397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6710545705730068048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 009206c293b81a244b931f4c7e85de8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxSpeed: 5
-  _velocity: {x: 0, y: 0, z: 0}
-  maxSteeringForce: 2
-  futureTime: 10
-  arriveRadius: 35.7
-  target: {fileID: 0}
-  food: {fileID: 0}
-  arriveDistance: 5
-  arrive: 0
---- !u!114 &4246871344853912450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6710545705730068048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 490bf3f855212e54d8ddfe447ff8ef8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isActive: 0
-  _maxForce: 0.08
-  _effectiveness: 1
-  shouldDebug: 0
 --- !u!114 &9040920863394208467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,3 +230,76 @@ CapsuleCollider:
   m_Height: 0.75
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0.035}
+--- !u!114 &5730262198342627554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6710545705730068048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b67ca243ab120a4480b4f07c5ab0029, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isActive: 1
+  _maxForce: 0.08
+  _effectiveness: 1
+  _hunter: {fileID: 0}
+  maxSteeringForce: 0.01
+  predictionTime: 5
+--- !u!114 &4594038167757234482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6710545705730068048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490bf3f855212e54d8ddfe447ff8ef8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isActive: 1
+  _maxForce: 0.08
+  _effectiveness: 1
+  shouldDebug: 0
+--- !u!114 &3384385436268247631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6710545705730068048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52f83db942ab9a3488f2fdaa935c2d77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isActive: 0
+  _maxForce: 0.08
+  _effectiveness: 1
+  _food: {fileID: 0}
+  maxSteeringForce: 0
+  arrivalRadius: 0.2
+--- !u!114 &1860877810666778023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6710545705730068048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9c8ff4336ba74043949ba86140a593e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isActive: 0
+  _maxForce: 0.08
+  _effectiveness: 1
+  _castRadius: 0.2
+  _aheadDistance: 3
+  _obstacleMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _angle: 45

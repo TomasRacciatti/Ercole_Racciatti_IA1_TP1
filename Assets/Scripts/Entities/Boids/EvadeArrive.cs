@@ -43,7 +43,7 @@ public class EvadeArrive : AgentBoid
         }
 
         var newForce = Vector3.zero;
-        newForce = EvadeFunc(target.Position, target.Velocity, futureTime);
+        newForce = EvadeFunc(transform.position, target.Velocity, futureTime);
         AddForce(newForce);
         
     }
@@ -76,7 +76,6 @@ public class EvadeArrive : AgentBoid
         Debug.DrawRay(transform.position, desiredDir.normalized, Color.red);
         // Dibujamos el steering behavior a aplicar.
         Debug.DrawRay(transform.position + _velocity.normalized, steering, Color.blue);
-        
         // Devolvemos el steering behavior previamente escalado.
         return steering;
     }
