@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    public Vector3 Position => transform.position;
+    public virtual Vector3 Position => transform.position;
     public Vector3 Forward => transform.forward;
     public virtual Vector3 Velocity => Vector3.zero;
     

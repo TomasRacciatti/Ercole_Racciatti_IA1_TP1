@@ -91,10 +91,16 @@ public class EvadeArrive : AgentBoid
     private Vector3 Pursuit(Vector3 position, Vector3 targetVelocity ,float time)
     {
         // Calculamos la posicion en el futuro sumandole la velocidad por el tiempo a la posicion del objetivo.
-        var futurePosition = position + (targetVelocity * time);
-        
+        //var futurePosition = position + (targetVelocity * time);
+
+        float distanceToTarget = Vector3.Distance(transform.position, position);
+        float timeFactor = Mathf.Clamp01(distanceToTarget / time);
+        float futureTime = time * timeFactor;
+
+        Vector3 _futurePosition = position + targetVelocity * futureTime;
+
         // Devolvemos la direccion resultante de aplicar Seek a la posicion en el futuro.
-        return Seek(futurePosition);
+        return Seek(_futurePosition);
     }
     
     
