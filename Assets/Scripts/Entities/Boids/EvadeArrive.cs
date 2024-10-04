@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EvadeArrive : AgentBoid
 {
-    [Tooltip("Maxima fuerza aplicable por el steering behavior. (porcentual 1 = 100%)")]
+   /* [Tooltip("Maxima fuerza aplicable por el steering behavior. (porcentual 1 = 100%)")]
     [Range(0f, 2f)] public float maxSteeringForce;
 
     [Tooltip("Tiempo en segundos que vamos a usar para predecir la posicion futura en Pursuit y Evade.")]
@@ -149,5 +149,5 @@ public class EvadeArrive : AgentBoid
     void OnDestroy()
     {
         AreaManager.foodOn -= GetFood;
-    }
+    }*/
 }
