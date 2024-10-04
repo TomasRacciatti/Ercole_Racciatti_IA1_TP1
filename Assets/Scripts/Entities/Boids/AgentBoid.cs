@@ -10,7 +10,7 @@ public abstract class AgentBoid : Entity
     
     public float MaxSpeed => _maxSpeed;
     
-    [Header("Agent")]
+    [Header("Agent-boid")]
     [SerializeField] protected float _maxSpeed = 5f;
     [SerializeField] protected Vector3 _velocity = Vector3.zero;
 
@@ -49,15 +49,6 @@ public abstract class AgentBoid : Entity
             behavior.Effectiveness = effectiveness;
         }
     }
-
-    public void UpdateBehaviorsActiveState()
-    {
-        foreach (var behavior in _steeringBehaviors)
-        {
-            behavior.Value.IsActive = false;
-        }
-    }
-
     public void UpdateBehaviorsActiveState(HashSet<Type> behaviorToActivate)
     {
         foreach (var behavior in _steeringBehaviors)
@@ -75,7 +66,6 @@ public abstract class AgentBoid : Entity
     {
         return Vector3.ClampMagnitude(toVector + force, _maxSpeed);
     }
-    
     protected void ApplyVelocity(bool changeRotation = false)
     {
         if(changeRotation) transform.forward = _velocity;
