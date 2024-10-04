@@ -25,18 +25,19 @@ public class HunterPatrol : IState
             return;
         }
 
-
-        foreach (Entity target in _hunter.target)
+        if (_hunter.target != null && _hunter.energy >= 0)
         {
-            Vector3 targetPosition = target.Position;
-
-            if (_hunter.target != null && _hunter.energy >= 20 && Vector3.Distance(targetPosition, _hunter.transform.position) <= _hunter._visionRadius)
+            foreach (Entity target in _hunter.target)
             {
-                _manager.SetState<HunterChase>();
-                return;
+                Vector3 targetPosition = target.Position;
+
+                if (Vector3.Distance(targetPosition, _hunter.transform.position) <= _hunter._visionRadius)
+                {
+                    _manager.SetState<HunterChase>();
+                    return;
+                }
             }
         }
-
 
         _hunter.energy -= _energyLoss * Time.deltaTime; // Loses energy while patrolling
 

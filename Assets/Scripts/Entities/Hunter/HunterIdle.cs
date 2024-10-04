@@ -24,14 +24,17 @@ public class HunterIdle : IState
             return;
         }
 
-        foreach (Entity target in _hunter.target)
+        if (_hunter.target != null && _hunter.energy >= _hunter.maxEnergy)
         {
-            Vector3 targetPosition = target.Position;
-
-            if (_hunter.target != null && _hunter.energy >= _hunter.maxEnergy && Vector3.Distance(targetPosition, _hunter.transform.position) <= _hunter._visionRadius)
+            foreach (Entity target in _hunter.target)
             {
-                _manager.SetState<HunterChase>();
-                return;
+                Vector3 targetPosition = target.Position;
+
+                if (Vector3.Distance(targetPosition, _hunter.transform.position) <= _hunter._visionRadius)
+                {
+                    _manager.SetState<HunterChase>();
+                    return;
+                }
             }
         }
     }
