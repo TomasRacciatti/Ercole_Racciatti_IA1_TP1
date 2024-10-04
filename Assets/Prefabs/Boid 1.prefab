@@ -151,7 +151,6 @@ GameObject:
   - component: {fileID: -8722191662483494397}
   - component: {fileID: 4246871344853912450}
   - component: {fileID: 9040920863394208467}
-  - component: {fileID: 8332621042815561052}
   - component: {fileID: 7743931560242436243}
   - component: {fileID: 8900991078705266603}
   m_Layer: 30
@@ -189,12 +188,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009206c293b81a244b931f4c7e85de8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSpeed: 20
+  _maxSpeed: 5
   _velocity: {x: 0, y: 0, z: 0}
-  maxSteeringForce: 1
-  futureTime: 5
-  arriveRadius: 5
+  maxSteeringForce: 2
+  futureTime: 10
+  arriveRadius: 35.7
   target: {fileID: 0}
+  food: {fileID: 0}
+  arriveDistance: 5
+  arrive: 0
 --- !u!114 &4246871344853912450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,30 +225,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ccb553d0b581cd49ace9a9c858c4103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isActive: 0
-  _maxForce: 0.08
+  _isActive: 1
+  _maxForce: 100
   _effectiveness: 1
---- !u!114 &8332621042815561052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6710545705730068048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9c8ff4336ba74043949ba86140a593e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isActive: 0
-  _maxForce: 0.2
-  _effectiveness: 1
-  _castRadius: 0.25
-  _aheadDistance: 5
-  _obstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
-  _angle: 45
 --- !u!114 &7743931560242436243
 MonoBehaviour:
   m_ObjectHideFlags: 0
