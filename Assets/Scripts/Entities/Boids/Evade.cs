@@ -4,56 +4,36 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EvadeArrive : AgentBoid
+public class Evade : AgentBoid
 {
     [Tooltip("Maxima fuerza aplicable por el steering behavior. (porcentual 1 = 100%)")]
-    [Range(0f, 2f)] public float maxSteeringForce;
+    [Range(0f, 1f)] public float maxSteeringForce;
 
     [Tooltip("Tiempo en segundos que vamos a usar para predecir la posicion futura en Pursuit y Evade.")]
     public float futureTime = 1f;
     
     [Tooltip("Radio desde el cual empezamos a frenar al usar Arrive.")]
-    public float arriveRadius = 1f;
+    public float arriveRadius = 5f;
     
     [Tooltip("Agente al cual tenemos de objetivo para aplicar los steering behaviors")]
     public Hunter target;
 
-    public Entity food;
-    private AreaManager _areaManager;
-    public float arriveDistance;
-    public float speed;
-    public bool arrive;
+    private Entity _food;
+    private bool _foodOn;
+    
     protected override void Start()
     {
         base.Start();
         AreaManager.foodOn += GetFood;
-        AreaManager.foodOff += OutFood;
         target = GameObject.FindGameObjectWithTag("hunter").GetComponent<Hunter>();
-        _areaManager = GameObject.FindGameObjectWithTag("areaManager").GetComponent<AreaManager>();
     }
 
     private void Update()
     {
-        if (_areaManager._foodColision != null)
-        {
-            food = GameObject.FindGameObjectWithTag("food").GetComponent<Entity>();
-            var ForceArrive = Vector3.zero;
-            ForceArrive= Arrive(food.transform.position, arriveRadius);
-            AddForce(ForceArrive);
-        }
-
         var newForce = Vector3.zero;
         newForce = EvadeFunc(target.Position, target.Velocity, futureTime);
         AddForce(newForce);
         
-    }
-
-    private void DistanceWithFood()
-    {
-        if (Vector3.Distance(transform.position, food.transform.position) <= arriveDistance)
-        {
-            
-        }
     }
     
     private Vector3 Seek(Vector3 position)
@@ -106,7 +86,6 @@ public class EvadeArrive : AgentBoid
     
     private Vector3 Arrive(Vector3 position, float arrivalRadius)
     {
-        Debug.Log("voy por la comida");
         // Calculamos la distancia entre nosotros y el objetivo.
         var distanceToTarget = Vector3.Distance(transform.position, position);
 
@@ -135,15 +114,11 @@ public class EvadeArrive : AgentBoid
 
     private void GetFood()
     {
-        if (food == null)
+        if (_food == null)
         {
-            food = GameObject.FindGameObjectWithTag("food").GetComponent<Entity>();
+            _food = GameObject.FindGameObjectWithTag("food").GetComponent<Entity>();
+            _foodOn = true;
         }
-    }
-
-    private void OutFood()
-    {
-        food = null;
     }
 
     void OnDestroy()
