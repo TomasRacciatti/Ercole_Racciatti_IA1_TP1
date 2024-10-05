@@ -13,36 +13,35 @@ public class FoodGetState : IState
     private AreaManager _areaManager;
     private EvadeFinal _evade;
     private Entity _hunter;
+
     public void OnAwake()
     {
-        _food = GameObject.FindGameObjectWithTag("food").GetComponent<Entity>();
-        
         _boid = _boid.GetComponent<Boid>();
         _flocking = _boid.GetComponent<Flocking>();
         _arriveFinal = _boid.GetComponent<ArriveFinal>();
         _obstacleAvoidance = _boid.GetComponent<ObstacleAvoidanceBoid>();
         _evade = _boid.GetComponent<EvadeFinal>();
-        
+
         _areaManager = Object.FindObjectOfType<AreaManager>();
-        _hunter = GameObject.FindGameObjectWithTag("Hunter").GetComponent<Entity>();
+        _hunter = GameObject.FindGameObjectWithTag("hunter").GetComponent<Entity>();
     }
 
     public void OnExecute()
     {
         Debug.Log("Buscando comida");
-        if (_areaManager._foodColision != null)
+        if (_areaManager._foodColision != null &&
+            Vector3.Distance(GameObject.FindGameObjectWithTag("food").GetComponent<Entity>().Position,
+                _boid.transform.position) <= 10)
         {
-            if (Vector3.Distance(_food.Position, _boid.transform.position) <= 20)
-            {
-                _arriveFinal._food = _food;
-                _boid.GetComponent<SteeringBehavior>().IsActive = true;
-                _flocking.GetComponent<SteeringBehavior>().IsActive = false;
-                _arriveFinal.GetComponent<SteeringBehavior>().IsActive = true;
-                _obstacleAvoidance.GetComponent<SteeringBehavior>().IsActive = true;
-                _evade.GetComponent<SteeringBehavior>().IsActive = false;
-            }
+            _food = GameObject.FindGameObjectWithTag("food").GetComponent<Entity>();
+            _arriveFinal._food = _food;
+            _boid.GetComponent<SteeringBehavior>().IsActive = true;
+            _flocking.GetComponent<SteeringBehavior>().IsActive = false;
+            _arriveFinal.GetComponent<SteeringBehavior>().IsActive = true;
+            _obstacleAvoidance.GetComponent<SteeringBehavior>().IsActive = true;
+            _evade.GetComponent<SteeringBehavior>().IsActive = false;
         }
-        else if (Vector3.Distance(_hunter.Position, _boid.transform.position) > 20)
+        else if (Vector3.Distance(_hunter.Position, _boid.transform.position) > 5)
         {
             _manager.SetState<EvadeState>();
         }
@@ -66,5 +65,4 @@ public class FoodGetState : IState
     {
         _boid = (Boid)agent;
     }
-
 }

@@ -5,30 +5,31 @@ using UnityEngine;
 
 public class FoodColision : MonoBehaviour
 {
-    public float rayDistance = 2f;   // Distancia máxima del raycast
-    public LayerMask pickUpLayer;  
-
-    /*private void Start()
+    public LayerMask pickUpLayer;
+    public float castRadius;
+    public float castDistance;
+    public LayerMask targetMask;
+    public Entity detectedObject;
+    public int numRays;
+    private void Update()
     {
-        _areaManager = GameObject.Find("AreaManager").GetComponent<AreaManager>();
-        if(_areaManager._foodColision == null) _areaManager._foodColision = this;
+        CheckForDestroy();
     }
 
-    private void OnTriggerExit(Collider other)
+    void CheckForDestroy()
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("food")) 
+        RaycastHit hit;
+        if (Physics.SphereCast(transform.position, castRadius, transform.right, out hit, castDistance, targetMask))
         {
-            _areaManager._foodColision = null;
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
+        if (Physics.SphereCast(transform.position, castRadius, transform.forward, out hit, castDistance, targetMask))
+        {
+            Destroy(gameObject);
+        }
+
+
     }
-    
-    private bool IsTargetVisible()
-    {
-        RaycastHit ObstacleHit;
-        if (Objective)	// make sure we have an objective first or we get a dirty error.
-            return (Physics.Raycast(OurShip.position, Objective.position - OurShip.position, out ObstacleHit, Mathf.Infinity) &&  ObstacleHit.transform != OurShip && ObstacleHit.transform == Objective);
-        else
-            return false;
-    }*/
+
+
 }

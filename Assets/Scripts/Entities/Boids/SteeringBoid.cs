@@ -154,7 +154,7 @@ public static class SteeringBoid
         // El Evade es esencialmente calcular la direccion de un Pursuit, pero irnos para el lado contrario.
         return -Pursuit(agent, futurePosition, maxSteeringForce);
     }
-        
+    
     /// <summary>
     /// Arrive es un steering behavior el cual nos permite ir hacia un objetivo (aplicando Seek) hasta estar dentro de
     /// un radio determinado, en el cual iremos frenando hasta llegar al objetivo deseado. En dicho momento la velocity
@@ -167,6 +167,11 @@ public static class SteeringBoid
     /// <returns>Devuelve la direccion que deberemos sumar para llegar a destino siguiendo el steering.</returns>
     public static Vector3 Arrive(AgentBoid agent, Entity target, float maxSteeringForce, float arrivalRadius)
     {
+        if (target == null)
+        {
+            Debug.LogWarning("Target is null, skipping arrival logic.");
+            return Vector3.zero;  // Skip this iteration if the target has been destroyed
+        }
         var targetPosition = target.GetClosestPosition(agent.Position);
         // Calculamos la distancia entre nosotros y el objetivo.
         var distanceToTarget = Vector3.Distance(agent.Position, targetPosition);
