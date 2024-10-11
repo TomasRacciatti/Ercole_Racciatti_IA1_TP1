@@ -31,33 +31,30 @@ public class Entity : MonoBehaviour
 
     public Vector3 GetClosestPosition(Vector3 relativePosition)
     {
-        if (this == null || gameObject == null)
+        if (relativePosition != null)
         {
-            Debug.LogWarning("Attempted to access a destroyed or null Entity.");
-            return Vector3.zero; 
-        }
-        var bestDistance = (Position - relativePosition).sqrMagnitude;
-        var bestPosition = Position;
 
-        for (int i = 0; i < 8; i++)
-        {
-            if (this == null) 
-            {
-                return Vector3.zero;
-            }
-            var newDistance = (relativePosition - _colliders[i].transform.position).sqrMagnitude;
-            if (this == null) 
-            {
-                return Vector3.zero;
-            }
-            if (newDistance < bestDistance)
-            {
-                bestDistance = newDistance;
-                bestPosition = _colliders[i].transform.position;
-            }
-        }
         
-        return bestPosition;
+            var bestDistance = (Position - relativePosition).sqrMagnitude;
+            var bestPosition = Position;
+
+            for (int i = 0; i < 8; i++)
+            {
+                if (relativePosition != null)
+                {
+                
+                    var newDistance = (relativePosition - _colliders[i].transform.position).sqrMagnitude;
+
+                    if (newDistance < bestDistance)
+                    {
+                        bestDistance = newDistance;
+                        bestPosition = _colliders[i].transform.position;
+                    }
+                }
+            }
+            return bestPosition;
+        }
+        return Vector3.zero;
     }
     
     protected void UpdateAreaColliders()

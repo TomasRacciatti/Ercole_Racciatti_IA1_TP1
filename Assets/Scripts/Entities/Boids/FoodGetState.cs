@@ -33,6 +33,7 @@ public class FoodGetState : IState
             Vector3.Distance(GameObject.FindGameObjectWithTag("food").GetComponent<Entity>().Position,
                 _boid.transform.position) <= 10)
         {
+            _areaManager.DetectFood();
             _food = GameObject.FindGameObjectWithTag("food").GetComponent<Entity>();
             _arriveFinal._food = _food;
             _boid.GetComponent<SteeringBehavior>().IsActive = true;
@@ -41,11 +42,11 @@ public class FoodGetState : IState
             _obstacleAvoidance.GetComponent<SteeringBehavior>().IsActive = true;
             _evade.GetComponent<SteeringBehavior>().IsActive = false;
         }
-        else if (Vector3.Distance(_hunter.Position, _boid.transform.position) > 5)
+        else if (Vector3.Distance(_hunter.Position, _boid.transform.position) < 10)
         {
             _manager.SetState<EvadeState>();
         }
-        else
+        else if (_areaManager._foodColision == null)
         {
             _manager.SetState<IdleState>();
         }

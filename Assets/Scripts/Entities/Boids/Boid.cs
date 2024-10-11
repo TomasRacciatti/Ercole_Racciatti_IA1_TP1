@@ -17,16 +17,13 @@ public class Boid : AgentBoid
     public float castDistance;
     public LayerMask targetMask;
     public Entity detectedObject;
-    
+
 
     protected override void Awake()
     {
-        AreaManager.foodOn += this.FoodOn;
-        AreaManager.foodOff += this.FoodOff;
-        
         _arriveFinal = GetComponent<ArriveFinal>();
         _areaManager = GetComponent<AreaManager>();
-        
+
         base.Awake();
 
         _steeringSettings.Add(typeof(Flocking));
@@ -35,7 +32,7 @@ public class Boid : AgentBoid
         _steeringSettings.Add(typeof(ArriveFinal));
 
         UpdateBehaviorsActiveState(_steeringSettings);
-        
+
         stateMachine = new();
 
 
@@ -48,15 +45,19 @@ public class Boid : AgentBoid
 
     protected override void Start()
     {
+        AreaManager.foodOn += this.FoodOn;
+        AreaManager.foodOff += this.FoodOff;
+        AreaManager.foodOff += CheckForMissingFood;
         base.Start();
         AddForce(new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized * MaxSpeed);
     }
 
     private void Update()
     {
+        CheckForMissingFood();
         stateMachine.OnUpdate();
         var boids = Flocking.DetectBoids(this);
-        
+
         SetBehaviorEffectiveness(typeof(Accelerate), boids.Count == 0 ? 1f : 0f, false);
         var dir = GetSteeringDirection(boids);
         AddForce(dir);
@@ -77,23 +78,30 @@ public class Boid : AgentBoid
     {
         _arriveFinal._food = null;
     }
-    
+
+    private void CheckForMissingFood()
+    {
+        if (detectedObject == null)
+        {
+            detectedObject = null;
+        }
+    }
+
     void CheckForFood()
     {
-            RaycastHit hit;
+        RaycastHit hit;
 
-            // Realizar el SphereCast desde la posición del objeto en dirección hacia adelante
-            if (Physics.SphereCast(transform.position, castRadius, transform.forward, out hit, castDistance, targetMask))
-            {
-                detectedObject = hit.transform.GetComponent<Entity>();
-                Debug.Log("encontré comida");
-            }
-
+        if (Physics.SphereCast(transform.position, castRadius, transform.forward, out hit, castDistance, targetMask))
+        {
+            detectedObject = hit.transform.GetComponent<Entity>();
+            Debug.Log("encontré comida");
+        }
     }
 
     private void OnDestroy()
     {
-        AreaManager.foodOn -= this.FoodOn;
-        AreaManager.foodOff -= this.FoodOff;
+        AreaManager.foodOn -= FoodOn;
+        AreaManager.foodOff -= FoodOff;
+        AreaManager.foodOff -= CheckForMissingFood;
     }
 }

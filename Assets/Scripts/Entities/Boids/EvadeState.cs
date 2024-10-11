@@ -35,7 +35,7 @@ public class EvadeState : IState
     public void OnExecute()
     {
         Debug.Log("Evadiendo");
-        if (Vector3.Distance(_hunter.Position, _boid.transform.position) <= 10)
+        if (Vector3.Distance(_hunter.Position, _boid.transform.position) < 10)
         {
             _evade.GetComponent<SteeringBehavior>().IsActive = true;
             _boid.GetComponent<SteeringBehavior>().IsActive = true;

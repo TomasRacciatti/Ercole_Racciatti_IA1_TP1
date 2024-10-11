@@ -13,22 +13,18 @@ public class FoodColision : MonoBehaviour
     public int numRays;
     private void Update()
     {
-        CheckForDestroy();
+        DetectCollision();
     }
-
-    void CheckForDestroy()
+    
+    private void DetectCollision()
     {
-        RaycastHit hit;
-        if (Physics.SphereCast(transform.position, castRadius, transform.right, out hit, castDistance, targetMask))
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, castRadius, targetMask);
+        
+        foreach (var hitCollider in hitColliders)
         {
+            AreaManager.foodOff();
             Destroy(gameObject);
         }
-        if (Physics.SphereCast(transform.position, castRadius, transform.forward, out hit, castDistance, targetMask))
-        {
-            Destroy(gameObject);
-        }
-
-
     }
 
 

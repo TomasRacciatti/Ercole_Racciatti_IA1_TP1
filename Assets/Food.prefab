@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 7852533124410462827}
   - component: {fileID: 4064595805037096171}
   - component: {fileID: 1067432556154279347}
+  - component: {fileID: 7596302520882910751}
   - component: {fileID: -3986208228002910133}
-  - component: {fileID: -7826236058953600003}
-  m_Layer: 28
+  - component: {fileID: 7784781459515479333}
+  m_Layer: 0
   m_Name: Food
   m_TagString: food
   m_Icon: {fileID: 0}
@@ -31,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 1399351966275259361}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalPosition: {x: -24.137102, y: 0.10000763, z: -4.5251694}
   m_LocalScale: {x: 1, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -120,6 +121,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ae97edcd5f3234ea65a52f6e541501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7596302520882910751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399351966275259361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f59a214e25d7ebe499c0b63c56f597ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &-3986208228002910133
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -143,25 +156,30 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-7826236058953600003
-MonoBehaviour:
+--- !u!54 &7784781459515479333
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1399351966275259361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f59a214e25d7ebe499c0b63c56f597ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickUpLayer:
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 268435456
-  castRadius: 1
-  castDistance: 1
-  targetMask:
+    m_Bits: 0
+  m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 134217728
-  detectedObject: {fileID: 0}
-  numRays: 0
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

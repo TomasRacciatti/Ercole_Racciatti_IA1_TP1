@@ -59,8 +59,10 @@ public class AreaManager : MonoBehaviour
 
     public void ButtonFood()
     {
+        DetectFood();
         if (_foodColision == null)
         {
+            foodOff();
             Spawn(_foodAmount, _foodPrefab);
             _foodColision = GameObject.FindGameObjectWithTag("food").GetComponent<FoodColision>();
         }
@@ -86,13 +88,13 @@ public class AreaManager : MonoBehaviour
         Gizmos.DrawLine(bottomRight, topRight);
     }
 
-    private void DetectFood()
+    public void DetectFood()
     {
         if (_foodColision == null)
         {
             foodOff?.Invoke();
         }
-        else if (foodOn != null)
+        else if (_foodColision != null)
         {
             foodOn?.Invoke();
         }

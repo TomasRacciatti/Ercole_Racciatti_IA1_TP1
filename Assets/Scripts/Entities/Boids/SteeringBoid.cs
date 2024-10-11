@@ -167,39 +167,41 @@ public static class SteeringBoid
     /// <returns>Devuelve la direccion que deberemos sumar para llegar a destino siguiendo el steering.</returns>
     public static Vector3 Arrive(AgentBoid agent, Entity target, float maxSteeringForce, float arrivalRadius)
     {
-        if (target == null)
+        if (agent != null)
         {
-            Debug.LogWarning("Target is null, skipping arrival logic.");
-            return Vector3.zero;  // Skip this iteration if the target has been destroyed
+            var targetPosition = target.GetClosestPosition(agent.Position);
+            // Calculamos la distancia entre nosotros y el objetivo.
+            var distanceToTarget = Vector3.Distance(agent.Position, targetPosition);
+
+            // Si la distancia es mayor que el radio, calculamos Seek y devolvemos el vector.
+            if (distanceToTarget > arrivalRadius)
+                return Seek(agent, target, maxSteeringForce);
+
+            // Si estamos dentro del radio, vamos a calcular la direccion opuesta deseada para poder ir frenando, la 
+            // normalizamos, escalamos por la velocidad de movimiento maxima y por la distancia entre nosotros y el objetivo
+            // respecto del radio. (Si estamos en el borde del radio va a ser 1f, si estamos en el objetivo sera 0f)
+            var desired = targetPosition - agent.Position;
+            desired.Normalize();
+            desired *= agent.MaxSpeed * (distanceToTarget / arrivalRadius);
+
+            // Una vez calculada la direccion deseada, calculamos el vector del steering y nos aseguramos que no exceda la
+            // velocidad maxima.
+            var steering = desired - agent.Velocity;
+            steering = Vector3.ClampMagnitude(steering, agent.MaxSpeed);
+
+            if (ShowDebugSteering)
+            {
+                // Dibujamos la direccion de nuestro steering.
+                Debug.DrawRay(agent.Position, steering.normalized, Color.magenta);
+            }
+
+            // Devolvemos el steering behavior.
+            return steering;
         }
-        var targetPosition = target.GetClosestPosition(agent.Position);
-        // Calculamos la distancia entre nosotros y el objetivo.
-        var distanceToTarget = Vector3.Distance(agent.Position, targetPosition);
-
-        // Si la distancia es mayor que el radio, calculamos Seek y devolvemos el vector.
-        if (distanceToTarget > arrivalRadius)
-            return Seek(agent, target, maxSteeringForce);
-
-        // Si estamos dentro del radio, vamos a calcular la direccion opuesta deseada para poder ir frenando, la 
-        // normalizamos, escalamos por la velocidad de movimiento maxima y por la distancia entre nosotros y el objetivo
-        // respecto del radio. (Si estamos en el borde del radio va a ser 1f, si estamos en el objetivo sera 0f)
-        var desired = targetPosition - agent.Position;
-        desired.Normalize();
-        desired *= agent.MaxSpeed * (distanceToTarget / arrivalRadius);
-
-        // Una vez calculada la direccion deseada, calculamos el vector del steering y nos aseguramos que no exceda la
-        // velocidad maxima.
-        var steering = desired - agent.Velocity;
-        steering = Vector3.ClampMagnitude(steering, agent.MaxSpeed);
-
-        if (ShowDebugSteering)
+        else
         {
-            // Dibujamos la direccion de nuestro steering.
-            Debug.DrawRay(agent.Position, steering.normalized, Color.magenta);
+            return Vector3.zero;
         }
-
-        // Devolvemos el steering behavior.
-        return steering;
     }
         
     /// <summary>
